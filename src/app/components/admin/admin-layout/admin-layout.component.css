@@ -1,0 +1,36 @@
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar .btn-link {
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+/* Hide content when collapsed */
+.sidebar.collapsed nav {
+  display: none;
+}
+
+/* Main Content */
+.content {
+  transition: margin-left 0.3s ease;
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+  .sidebar.collapsed ~ .content {
+    margin-left: 60px;
+  }
+
+  .sidebar ~ .content {
+    margin-left: 250px;
+  }
+}

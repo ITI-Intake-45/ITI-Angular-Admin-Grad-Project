@@ -1,0 +1,16 @@
+<div>
+  <div>
+    <label for="email">Email</label>
+    <input type="email" required #email />
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input type="password" required #password />
+  </div>
+
+  <div>
+    <input type="button" value="Login" (click)="login(email.value, password.value)" />
+    <input type="button" value="Reset" (click)="email.value = ''; password.value = ''" />
+  </div>
+</div>
