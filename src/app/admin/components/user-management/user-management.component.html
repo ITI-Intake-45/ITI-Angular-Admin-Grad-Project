@@ -1,1 +1,39 @@
-<p>user-management works!</p>
+<h2>Users List</h2>
+
+@if (message != null) {
+  alert(message);
+}
+
+@if (users.length != 0) {
+  <h3>User Count: {{ users.length }}</h3>
+
+  <div>
+  @for(user of users; track user.id) {
+    <div>
+      <p>
+        <strong>Id:</strong> {{ user.id }}
+      </p>
+
+      <p>
+        <strong>Name:</strong> {{ user.name }}
+      </p>
+
+      <p>
+        <strong>Email:</strong> {{ user.email }}
+      </p>
+
+      <p>
+        <strong>Phone:</strong> {{ user.phone ? user.phone : 'Not Specified' }}
+      </p>
+
+      <p>
+        <strong>Address:</strong> {{ user.address }}
+      </p>
+
+      <p>
+        <strong>Credit Balance:</strong> {{ user.creditBalance }}
+      </p>
+    </div>
+  }
+  </div>
+}

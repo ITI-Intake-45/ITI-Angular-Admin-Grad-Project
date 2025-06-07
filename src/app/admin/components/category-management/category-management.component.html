@@ -1,1 +1,16 @@
-<p>category-management works!</p>
+<h2>Categories List</h2>
+
+@if (message != null) {
+  alert(message);
+}
+
+@for (category of categories ; track category.id) {
+  <div>
+    <p>
+      <strong>ID:</strong> {{ category.id }}
+    </p>
+    <p>
+      <strong>Name:</strong> {{ category.name }}
+    </p>
+  </div>
+}

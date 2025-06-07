@@ -1,1 +1,46 @@
-<p>product-details works!</p>
+<h2>Product Details</h2>
+
+@if (message != null) {
+  alert(message);
+}
+
+@if (product != null) {
+  <div>
+    <p>
+      <strong>Title:</strong> {{ product.name }}
+    </p>
+
+    <p>
+      <strong>Description:</strong> {{ product.description }}
+    </p>
+
+    <p>
+      <strong>Price:</strong> {{ product.price }}
+    </p>
+
+    <img [src]="product.image" alt="The product image to be displayed">
+
+    <p>
+      <strong>Stock:</strong> {{ product.stock }}
+    </p>
+
+    <p>
+      <strong>Status:</strong>
+      @if (product.stock > 0) {
+        In Stock
+      }
+      @else {
+        Out of Stock
+      }
+    </p>
+
+    <p>
+      <strong>Category:</strong> {{ product.category.name }}
+    </p>
+
+    <button type="button"
+            (click)="updateProduct()">Update</button>
+    <button type="button"
+            (click)="deleteProduct()">Delete</button>
+  </div>
+}

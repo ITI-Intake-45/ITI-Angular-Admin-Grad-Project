@@ -10,4 +10,12 @@ export class ProductManagementService {
   createProduct(formData: FormData): Observable<Product> {
     return this._http.post<Product>(`${ApiService.apiUrl}/products`, formData, { withCredentials: true });
   }
+
+  updateProduct(formData: FormData): Observable<Product> {
+    return this._http.put<Product>(`${ApiService.apiUrl}/products/` + formData, { withCredentials: true });
+  }
+
+  deleteProduct(id: number): Observable<string> {
+    return this._http.delete<string>(`${ApiService.apiUrl}/products/${id}`, { withCredentials: true });
+  }
 }

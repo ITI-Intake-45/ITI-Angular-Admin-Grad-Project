@@ -3,6 +3,8 @@ import { Product } from '../../../models/Product';
 import { ProductCategory } from '../../../models/ProductCategory';
 import { ProductService } from '../../../services/ProductService';
 import { ProductManagementService } from '../../services/ProductManagementService';
+import { ActivatedRoute } from '@angular/router';
+import { MessageService } from '../../services/MessageService';
 
 @Component({
   selector: 'app-product-form',
@@ -11,7 +13,9 @@ import { ProductManagementService } from '../../services/ProductManagementServic
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent implements OnInit {
-  product: Product = {
+  protected message: string | null = null;
+
+  protected product: Product = {
     productId: 0,
     name: '',
     description: '',
@@ -21,14 +25,19 @@ export class ProductFormComponent implements OnInit {
     status: '',
     category: { id: 0, name: '' }
   };
-  categories: ProductCategory[] = [];
-  imageFile: File | null = null;
 
-  constructor(private _productService: ProductService,
+  protected categories: ProductCategory[] = [];
+  protected imageFile: File | null = null;
+
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _messageService: MessageService,
+              private _productService: ProductService,
               private _productManagementService: ProductManagementService) {}
 
   ngOnInit() {
-    this._productService.getCategories().subscribe(categories => {
+    this.message = this._messageService.getMessage(this._activatedRoute);
+
+    this._productService.getAllCategories().subscribe((categories: ProductCategory[]) => {
       this.categories = categories;
     });
   }

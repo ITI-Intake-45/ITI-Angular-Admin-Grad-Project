@@ -18,10 +18,4 @@ export class AdminLoginComponent {
       this._router.navigateByUrl(`/admin`).then(_ => {});
     }
   }
-
-  validatePreviousSession(): void {
-    if (this._adminAuthService.isAuthenticated()) {
-      this._router.navigateByUrl(`/admin`).then(_ => {});
-    }
-  }
 }

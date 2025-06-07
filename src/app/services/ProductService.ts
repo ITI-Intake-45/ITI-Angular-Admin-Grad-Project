@@ -10,12 +10,16 @@ export class ProductService {
   constructor(private _http: HttpClient) {
   }
 
-  getCategories(): Observable<ProductCategory[]> {
+  getAllCategories(): Observable<ProductCategory[]> {
     return this._http.get<ProductCategory[]>(`${ApiService.apiUrl}/categories`, {withCredentials: true});
   }
 
-  getProductById(id: string): Observable<Product> {
-    return this._http.get<Product>(`${ApiService.apiUrl}/products/${id}`, {withCredentials: true});
+  getAllProducts(): Observable<Product[]> {
+    return this._http.get<Product[]>(`${ApiService.apiUrl}/products`);
+  }
+
+  getProductById(productId: number): Observable<Product> {
+    return this._http.get<Product>(`${ApiService.apiUrl}/products/${productId}`, {withCredentials: true});
   }
 
   getProductsByCategoryId(categoryId: number): Observable<Product[]> {
