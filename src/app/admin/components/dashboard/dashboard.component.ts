@@ -4,6 +4,7 @@ import { UserManagementService } from '../../services/UserManagementService';
 import { OrderManagementService } from '../../services/OrderManagementService';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from '../../services/MessageService';
+import { CategoryService } from '../../../services/CategoryService';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _messageService: MessageService,
               private _productService: ProductService,
+              private _categoryService: CategoryService,
               private _userManagementService: UserManagementService,
               private _orderManagementService: OrderManagementService) {
   }
@@ -29,7 +31,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.message = this._messageService.getMessage(this._activatedRoute);
 
-    this._productService.getAllCategories().subscribe({
+    this._categoryService.getAllCategories().subscribe({
       next: response => {
         this.categoriesCount = response.length;
       },

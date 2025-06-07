@@ -3,3 +3,22 @@
 @if (message != null) {
   alert(message);
 }
+
+<div class="admin-category-form">
+  @if (id != null) {
+    <div class="form-group">
+      <label for="id">Id</label>
+      <input type="text" [value]="id" readonly />
+    </div>
+  }
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" required #name [value]="name ? name: ''"/>
+  </div>
+
+  <div class="form-group">
+    <button type="button"
+            (click)="submit(name.value)">Submit</button>
+  </div>
+</div>

@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { ProductCategory } from '../models/ProductCategory';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiService } from './ApiService';
 import { Product } from '../models/Product';
@@ -8,10 +7,6 @@ import { Page } from '../models/Page';
 export class ProductService {
 
   constructor(private _http: HttpClient) {
-  }
-
-  getAllCategories(): Observable<ProductCategory[]> {
-    return this._http.get<ProductCategory[]>(`${ApiService.apiUrl}/categories`, {withCredentials: true});
   }
 
   getAllProducts(): Observable<Product[]> {

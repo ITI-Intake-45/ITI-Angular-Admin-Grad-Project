@@ -4,7 +4,12 @@
   alert(message);
 }
 
-@for (category of categories ; track category.id) {
+@if (isAddSupported) {
+  <button type="button"
+          (click)="add()">Add new Category</button>
+}
+
+@for (category of categories; track category.id) {
   <div>
     <p>
       <strong>ID:</strong> {{ category.id }}
@@ -12,5 +17,18 @@
     <p>
       <strong>Name:</strong> {{ category.name }}
     </p>
+
+    @if (isUpdateSupported || isDeleteSupported) {
+      <div>
+        @if (isUpdateSupported) {
+          <button type="button"
+                  (click)="update(category.id)">Update</button>
+        }
+        @if (isDeleteSupported) {
+          <button type="button"
+                  (click)="delete(category.id)">Delete</button>
+        }
+      </div>
+    }
   </div>
 }

@@ -28,8 +28,7 @@
       <strong>Status:</strong>
       @if (product.stock > 0) {
         In Stock
-      }
-      @else {
+      } @else {
         Out of Stock
       }
     </p>
@@ -38,9 +37,16 @@
       <strong>Category:</strong> {{ product.category.name }}
     </p>
 
-    <button type="button"
-            (click)="updateProduct()">Update</button>
-    <button type="button"
-            (click)="deleteProduct()">Delete</button>
+    @if (isUpdateSupported) {
+      <button type="button"
+              (click)="updateProduct()">Update
+      </button>
+    }
+
+    @if (isDeleteSupported) {
+      <button type="button"
+              (click)="deleteProduct()">Delete
+      </button>
+    }
   </div>
 }

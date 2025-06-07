@@ -4,7 +4,9 @@
   alert(message);
 }
 
-<button type="button" (click)="addProduct()">Add Product</button>
+@if (isAddSupported) {
+  <button type="button" (click)="addProduct()">Add Product</button>
+}
 
 @if (products.length != 0) {
   <h3>Product Count: {{ products.length }}</h3>
@@ -12,7 +14,7 @@
   <div>
     @for (product of products; track product.productId) {
       <div>
-        <img [src]="product.image" alt="Product image to be displayed" />
+        <img [src]="product.image" alt="Product image to be displayed"/>
 
         <h3>{{ product.name }}</h3>
 
@@ -24,10 +26,17 @@
           <strong>Stock:</strong> {{ product.stock }}
         </p>
 
-        <button type="button"
-                (click)="updateProduct(product)">Update</button>
-        <button type="button"
-                (click)="deleteProduct(product)">Delete</button>
+        @if (isUpdateSupported) {
+          <button type="button"
+                  (click)="updateProduct(product)">Update
+          </button>
+        }
+
+        @if (isDeleteSupported) {
+          <button type="button"
+                  (click)="deleteProduct(product)">Delete
+          </button>
+        }
       </div>
     }
   </div>

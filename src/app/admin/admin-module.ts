@@ -8,6 +8,7 @@ import { ProductFormComponent } from './components/product-form/product-form.com
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { AdminRoutingModule } from './admin-routing-module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AdminRoutingModule } from './admin-routing-module';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
   ]
 })
 export class AdminModule { }

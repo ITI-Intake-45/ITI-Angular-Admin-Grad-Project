@@ -4,6 +4,7 @@ import { ProductService } from '../../../services/ProductService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductManagementService } from '../../services/ProductManagementService';
 import { MessageService } from '../../services/MessageService';
+import { CrudPermissions } from '../../models/CrudPermissions';
 
 @Component({
   selector: 'app-product-management',
@@ -15,6 +16,10 @@ export class ProductManagementComponent implements OnInit {
   protected message: string | null = null;
 
   protected products: Product[] = [];
+
+  protected isAddSupported: boolean = CrudPermissions.IS_ADD_PRODUCT_AVAILABLE;
+  protected isUpdateSupported: boolean = CrudPermissions.IS_UPDATE_PRODUCT_AVAILABLE;
+  protected isDeleteSupported: boolean = CrudPermissions.IS_DELETE_PRODUCT_AVAILABLE;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _messageService: MessageService,
@@ -49,7 +54,7 @@ export class ProductManagementComponent implements OnInit {
   deleteProduct(product: Product): void {
     this._productManagementService.deleteProduct(product.productId).subscribe({
       next: response => {
-        alert(response);
+        this.message = response;
         this.products.splice(this.products.indexOf(product), 1);
       },
       error: err => {
