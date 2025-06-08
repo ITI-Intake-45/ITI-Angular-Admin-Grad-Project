@@ -12,13 +12,15 @@ export class AdminLoginComponent {
   protected emailValue: string = '';
   protected passwordValue: string = '';
 
-  constructor(private _adminAuthService: AdminAuthService, private _router: Router) {}
+  protected message: string | null = null;
+
+  constructor(private _adminAuthService: AdminAuthService) {}
 
   login(email: string, password: string): void {
-    const isSuccessful: boolean = this._adminAuthService.login(email, password);
-    if (isSuccessful) {
-      this._router.navigateByUrl(`/admin`).then(_ => {});
-    }
+    this._adminAuthService.login(email, password);
+    this._adminAuthService.message$.subscribe(response => {
+      this.message = response;
+    });
   }
 
   resetForm(emailField: HTMLInputElement, passwordField: HTMLInputElement) {

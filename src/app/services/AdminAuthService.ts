@@ -1,36 +1,93 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { ApiService } from './ApiService';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
+// ApiService.apiUrl + '/admin/login'
+// ApiService.apiUrl + '/admin/logout'
+// ApiService.apiUrl + '/auth/status'
 @Injectable({
   providedIn: "root",
 })
 export class AdminAuthService {
-
   private isLoggedIn: boolean = false;
 
-  login(email: string, password: string): boolean {
-    // ApiService.apiUrl + '/admin/login'
-    // ApiService.apiUrl + '/admin/logout'
-    // ApiService.apiUrl + '/auth/status'
-    console.log('email:', email, 'password:', password);
+  // BehaviorSubject holds the current value and emits it to new subscribers
+  private messageSubject = new BehaviorSubject<string>('Initial message');
 
-    if (this.isLoggedIn) {
-      return true;
-    }
+  // Observable stream ($ convention indicates it's an Observable)
+  public message$ = this.messageSubject.asObservable();
 
-    this.isLoggedIn = true;
-    return true;
+  constructor(private _http: HttpClient,
+              private _router: Router) {
   }
 
-  logout(): boolean {
-    if (!this.isLoggedIn) {
-      return false;
+  login(email: string, password: string): void {
+    if (this.isLoggedIn) {
+      this.redirectToAdminHome();
+      return;
     }
 
-    this.isLoggedIn = false;
-    return true;
+    const loginDTO = {
+      email: email,
+      password: password,
+    };
+
+    this._http.post<string>(ApiService.apiUrl + '/admin/login', loginDTO, { withCredentials: true }).subscribe({
+      next: response => {
+        this.messageSubject.next(response);
+        this.isLoggedIn = true;
+
+        setTimeout(() => {
+          this.redirectToAdminHome();
+        }, 500);
+        console.log('here 1');
+      },
+      error: err => {
+        this.messageSubject.next(err);
+        this.isLoggedIn = true;
+        this.redirectToAdminHome();
+
+        console.log('here 2');
+      }
+    });
+  }
+
+
+  logout(): void {
+    if (!this.isLoggedIn) {
+      this.redirectToLogin();
+      return;
+    }
+
+    this._http.post<string>(ApiService.apiUrl + '/admin/logout', { withCredentials: true }).subscribe({
+      next: response => {
+        this.messageSubject.next(response);
+        this.isLoggedIn = false;
+
+        setTimeout(() => {
+          this.redirectToLogin();
+        }, 500);
+      },
+      error: err => {
+        this.messageSubject.next(err);
+      }
+    });
   }
 
   isAuthenticated(): boolean {
     return this.isLoggedIn;
   }
+
+  private redirectToAdminHome(): void {
+    this._router.navigateByUrl('/admin')
+      .then(_ => {});
+  }
+
+  private redirectToLogin(): void {
+    this._router.navigateByUrl('/admin/login')
+      .then(_ => {});
+  }
+
 }
