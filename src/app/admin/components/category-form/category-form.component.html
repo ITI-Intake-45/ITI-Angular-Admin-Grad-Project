@@ -18,11 +18,21 @@
 
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" required #nameField [value]="name ? name : ''" id="name" />
+      <input type="text"
+             class="form-control"
+             required
+             #nameField
+             [value]="name ? name : ''" id="name"
+             (input)="name = nameField.value.trim()"
+             (keyup.enter)="submit(nameField.value)"
+             autofocus />
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-      <button type="button" class="btn btn-primary" (click)="submit(nameField.value)">Submit</button>
+      <button type="button"
+              class="btn btn-primary"
+              (click)="submit(nameField.value)"
+              [disabled]="!name">Submit</button>
     </div>
   </div>
 </div>

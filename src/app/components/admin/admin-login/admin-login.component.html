@@ -18,7 +18,8 @@
                id="email"
                required
                #emailInput
-               (input)="emailValue = emailInput.value.trim()" />
+               (input)="emailValue = emailInput.value.trim()"
+               (keyup.enter)="login(emailInput.value, passwordInput.value)"/>
       </div>
 
       <!-- Password -->
@@ -29,7 +30,8 @@
                id="password"
                required
                #passwordInput
-               (input)="passwordValue = passwordInput.value.trim()" />
+               (input)="passwordValue = passwordInput.value.trim()"
+               (keyup.enter)="login(emailInput.value, passwordInput.value)"/>
       </div>
 
       <!-- Buttons -->

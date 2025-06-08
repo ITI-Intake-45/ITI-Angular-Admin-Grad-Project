@@ -5,6 +5,7 @@ import { MessageService } from '../../services/MessageService';
 import { CategoryManagementService } from '../../services/CategoryManagementService';
 import { CategoryService } from '../../../services/CategoryService';
 import { CrudPermissions } from '../../models/CrudPermissions';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-category-management',
@@ -55,8 +56,8 @@ export class CategoryManagementComponent implements OnInit {
       next: response => {
         this.message = response;
       },
-      error: err => {
-        console.log(err);
+      error: (err: HttpErrorResponse) => {
+        this.message = err.error;
       }
     })
   }

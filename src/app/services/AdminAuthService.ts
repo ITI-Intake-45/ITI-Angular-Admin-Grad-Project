@@ -34,7 +34,10 @@ export class AdminAuthService {
       password: password,
     };
 
-    this._http.post<string>(ApiService.apiUrl + '/admin/login', loginDTO, { withCredentials: true }).subscribe({
+    this._http.post(ApiService.authApiUrl + '/admin/login', loginDTO, {
+      withCredentials: true,
+      responseType: 'text' // Tell Angular to expect plain text, not JSON
+    }).subscribe({
       next: response => {
         this.messageSubject.next(response);
         this.isLoggedIn = true;
@@ -42,14 +45,13 @@ export class AdminAuthService {
         setTimeout(() => {
           this.redirectToAdminHome();
         }, 500);
-        console.log('here 1');
       },
       error: err => {
-        this.messageSubject.next(err);
-        this.isLoggedIn = true;
-        this.redirectToAdminHome();
-
-        console.log('here 2');
+        if (err.error) {
+          this.messageSubject.next(err.error);
+        } else {
+          this.messageSubject.next('Login failed');
+        }
       }
     });
   }
@@ -61,7 +63,7 @@ export class AdminAuthService {
       return;
     }
 
-    this._http.post<string>(ApiService.apiUrl + '/admin/logout', { withCredentials: true }).subscribe({
+    this._http.post<string>(ApiService.authApiUrl + '/admin/logout', { withCredentials: true }).subscribe({
       next: response => {
         this.messageSubject.next(response);
         this.isLoggedIn = false;

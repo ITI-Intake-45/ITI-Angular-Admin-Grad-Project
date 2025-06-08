@@ -4,6 +4,7 @@ import { MessageService } from '../../services/MessageService';
 import { CategoryManagementService } from '../../services/CategoryManagementService';
 import { CategoryService } from '../../../services/CategoryService';
 import { CrudPermissions } from '../../models/CrudPermissions';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-category-form',
@@ -72,7 +73,7 @@ export class CategoryFormComponent implements OnInit {
         this.name = response.name;
       },
       error: err => {
-        console.log(err);
+        this.message = err.message;
       }
     });
   }
@@ -87,40 +88,36 @@ export class CategoryFormComponent implements OnInit {
     }
 
     if (this.mode == this.ADD_MODE && !this.isAddSupported) {
-      alert('Add is not supported yet');
+      this.message = 'Add is not supported yet';
       return;
     }
 
     if (this.mode == this.UPDATE_MODE && !this.isUpdateSupported) {
-      alert('Update is not supported yet');
+      this.message = 'Update is not supported yet';
       return;
     }
 
     if (this.mode == this.ADD_MODE) {
-      const formData = new FormData();
-      formData.append('name', name);
-      this._categoryManagementService.createCategory(formData).subscribe({
+      this._categoryManagementService.createCategory(name).subscribe({
         next: response => {
           this._router.navigateByUrl('/admin/categories?message' + `A category with added with id=${response.id}`)
             .then(_ => {});
         },
-        error: err => {
-          console.log(err);
+        error: (err: HttpErrorResponse) => {
+          this.message = err.error;
         }
       });
     }
 
     if (this.mode == this.UPDATE_MODE) {
-      const formData = new FormData();
-      formData.append('id', this.id + '');
-      formData.append('name', name);
-      this._categoryManagementService.updateCategory(formData).subscribe({
+      this._categoryManagementService.updateCategory(this.id!, name).subscribe({
         next: response => {
-          this._router.navigateByUrl('/admin/categories?message' + `The category with ${response.id} was updated`)
+          this._router.navigateByUrl('/admin/categories?message' + response)
             .then(_ => {});
         },
-        error: err => {
+        error: (err: HttpErrorResponse) => {
           console.log(err);
+          this.message = err.error;
         }
       });
     }

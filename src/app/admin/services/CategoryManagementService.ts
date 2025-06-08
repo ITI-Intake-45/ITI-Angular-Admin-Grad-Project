@@ -12,12 +12,24 @@ export class CategoryManagementService {
   constructor(private _http: HttpClient) {
   }
 
-  createCategory(formData: FormData): Observable<ProductCategory> {
-    return this._http.post<ProductCategory>(`${ApiService.apiUrl}/categories`, formData, {withCredentials: true});
+  createCategory(name: string): Observable<ProductCategory> {
+    const createCategoryDTO = {
+      name: name
+    };
+
+    return this._http.post<ProductCategory>(`${ApiService.apiUrl}/categories`, createCategoryDTO, { withCredentials: true });
   }
 
-  updateCategory(formData: FormData): Observable<ProductCategory> {
-    return this._http.put<ProductCategory>(`${ApiService.apiUrl}/categories`, formData, {withCredentials: true});
+  updateCategory(id: number, name: string): Observable<string> {
+    const updateCategoryDTO = {
+      id: id,
+      name: name
+    };
+
+    return this._http.put(`${ApiService.apiUrl}/categories`, updateCategoryDTO, {
+      withCredentials: true,
+      responseType: 'text'
+    });
   }
 
   deleteCategory(id: number): Observable<string> {

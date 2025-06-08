@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductManagementService } from '../../services/ProductManagementService';
 import { MessageService } from '../../services/MessageService';
 import { CrudPermissions } from '../../models/CrudPermissions';
+import { ApiService } from '../../../services/ApiService';
 
 @Component({
   selector: 'app-product-management',
@@ -39,6 +40,15 @@ export class ProductManagementComponent implements OnInit {
       }
     });
 
+  }
+
+  getImagePath(path: string) {
+    return ApiService.getRealImagePath(path);
+  }
+
+  viewProduct(id: number): void {
+    this._router.navigateByUrl('/admin/products/productDetails?id=' + id)
+      .then(_ => {});
   }
 
   addProduct(): void {
