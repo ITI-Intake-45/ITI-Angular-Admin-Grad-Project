@@ -7,7 +7,6 @@ import { ProductManagementComponent } from './components/product-management/prod
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
-import { NotFoundComponent } from '../components/not-found/not-found.component';
 
 const routes: Routes = [
   {

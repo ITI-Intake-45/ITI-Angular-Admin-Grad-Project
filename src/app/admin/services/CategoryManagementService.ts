@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../services/ApiService';
 import { ProductCategory } from '../../models/ProductCategory';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: "root",
+})
 export class CategoryManagementService {
 
   constructor(private _http: HttpClient) {

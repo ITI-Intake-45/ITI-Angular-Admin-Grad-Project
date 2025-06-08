@@ -26,11 +26,21 @@
 
 /* Responsive Behavior */
 @media (max-width: 768px) {
-  .sidebar.collapsed ~ .content {
-    margin-left: 60px;
+  /* Switch to top-down layout */
+  .d-flex.flex-column.vh-100 {
+    flex-direction: column;
   }
 
-  .sidebar ~ .content {
-    margin-left: 250px;
+  .sidebar {
+    width: 100%;
+    border-bottom: 1px solid #333; /* Optional: Add a separator line */
+  }
+
+  .sidebar.collapsed {
+    width: auto; /* Reset width for top-down layout */
+  }
+
+  .content {
+    margin-left: 0; /* Reset margin for top-down layout */
   }
 }

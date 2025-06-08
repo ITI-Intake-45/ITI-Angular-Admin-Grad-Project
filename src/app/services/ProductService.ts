@@ -3,7 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiService } from './ApiService';
 import { Product } from '../models/Product';
 import { Page } from '../models/Page';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: "root",
+})
 export class ProductService {
 
   constructor(private _http: HttpClient) {

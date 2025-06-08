@@ -1,39 +1,46 @@
-<h2>Users List</h2>
+<div class="container py-4">
+  <h2 class="mb-4">Users List</h2>
 
-@if (message != null) {
-  alert(message);
-}
-
-@if (users.length != 0) {
-  <h3>User Count: {{ users.length }}</h3>
-
-  <div>
-  @for(user of users; track user.id) {
-    <div>
-      <p>
-        <strong>Id:</strong> {{ user.id }}
-      </p>
-
-      <p>
-        <strong>Name:</strong> {{ user.name }}
-      </p>
-
-      <p>
-        <strong>Email:</strong> {{ user.email }}
-      </p>
-
-      <p>
-        <strong>Phone:</strong> {{ user.phone ? user.phone : 'Not Specified' }}
-      </p>
-
-      <p>
-        <strong>Address:</strong> {{ user.address }}
-      </p>
-
-      <p>
-        <strong>Credit Balance:</strong> {{ user.creditBalance }}
-      </p>
+  @if (message != null) {
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   }
-  </div>
-}
+
+  @if (users.length != 0) {
+    <h3 class="mb-4">User Count: {{ users.length }}</h3>
+
+    <div class="row g-4">
+      @for (user of users; track user.id) {
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title text-primary d-flex align-items-center">
+                <i class="bi bi-person-fill me-2"></i>
+                {{ user.name }}
+              </h5>
+
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Id</dt>
+                <dd class="col-sm-8">{{ user.id }}</dd>
+
+                <dt class="col-sm-4">Email</dt>
+                <dd class="col-sm-8">{{ user.email }}</dd>
+
+                <dt class="col-sm-4">Phone</dt>
+                <dd class="col-sm-8">{{ user.phone ? user.phone : 'Not Specified' }}</dd>
+
+                <dt class="col-sm-4">Address</dt>
+                <dd class="col-sm-8">{{ user.address }}</dd>
+
+                <dt class="col-sm-4">Credit Balance</dt>
+                <dd class="col-sm-8">${{ user.creditBalance }}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,34 +1,75 @@
-<h2>Categories List</h2>
+<div class="container py-4">
+  <h2 class="mb-4">Categories List</h2>
 
-@if (message != null) {
-  alert(message);
-}
+  @if (message != null) {
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  }
 
-@if (isAddSupported) {
-  <button type="button"
-          (click)="add()">Add new Category</button>
-}
+  @if (isAddSupported) {
+    <div class="mb-4">
+      <button type="button" class="btn btn-success" (click)="add()">Add new Category</button>
+    </div>
+  }
 
-@for (category of categories; track category.id) {
-  <div>
-    <p>
-      <strong>ID:</strong> {{ category.id }}
-    </p>
-    <p>
-      <strong>Name:</strong> {{ category.name }}
-    </p>
+  <div class="row g-4">
+    @for (category of categories; track category.id) {
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Category</h5>
+            <p class="card-text">
+              <strong>ID:</strong> {{ category.id }}
+            </p>
+            <p class="card-text mb-4">
+              <strong>Name:</strong> {{ category.name }}
+            </p>
 
-    @if (isUpdateSupported || isDeleteSupported) {
-      <div>
-        @if (isUpdateSupported) {
-          <button type="button"
-                  (click)="update(category.id)">Update</button>
-        }
-        @if (isDeleteSupported) {
-          <button type="button"
-                  (click)="delete(category.id)">Delete</button>
-        }
+            @if (isUpdateSupported || isDeleteSupported) {
+              <div class="d-flex gap-2">
+                @if (isUpdateSupported) {
+                  <button type="button" class="btn btn-outline-primary btn-sm" (click)="update(category.id)">Update</button>
+                }
+                @if (isDeleteSupported) {
+                  <button type="button"
+                          class="btn btn-outline-danger btn-sm"
+                          [attr.data-bs-toggle]="'modal'"
+                          [attr.data-bs-target]="'#deleteModal' + category.id">
+                    Delete
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        </div>
       </div>
     }
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+@for (category of categories; track category.id) {
+  <div class="modal fade"
+       id="deleteModal{{ category.id }}"
+       tabindex="-1"
+       [attr.aria-labelledby]="'deleteModalLabel' + category.id"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel{{ category.id}}">Confirm Deletion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete the category "<strong>{{ category.name }}</strong>"?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="delete(category.id)" data-bs-dismiss="modal">Delete</button>
+        </div>
+      </div>
+    </div>
   </div>
 }

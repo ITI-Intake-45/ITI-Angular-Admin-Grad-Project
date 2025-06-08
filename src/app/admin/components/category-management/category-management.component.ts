@@ -46,7 +46,7 @@ export class CategoryManagementComponent implements OnInit {
   }
 
   update(id: number): void {
-    this._router.navigateByUrl(`/admin/categories/categoryForm?mode=update?id=${id}`)
+    this._router.navigateByUrl(`/admin/categories/categoryForm?mode=update&id=${id}`)
       .then(_ => {});
   }
 

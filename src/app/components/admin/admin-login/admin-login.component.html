@@ -1,16 +1,44 @@
-<div>
-  <div>
-    <label for="email">Email</label>
-    <input type="email" required #email />
-  </div>
+<div class="d-flex align-items-center justify-content-center vh-100 bg-light">
+  <div class="card shadow-sm w-100" style="max-width: 400px;">
+    <div class="card-body p-4">
+      <h4 class="card-title text-center mb-4">Admin Login</h4>
 
-  <div>
-    <label for="password">Password</label>
-    <input type="password" required #password />
-  </div>
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email"
+               class="form-control"
+               id="email"
+               required
+               #emailInput
+               (input)="emailValue = emailInput.value.trim()" />
+      </div>
 
-  <div>
-    <input type="button" value="Login" (click)="login(email.value, password.value)" />
-    <input type="button" value="Reset" (click)="email.value = ''; password.value = ''" />
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password"
+               class="form-control"
+               id="password"
+               required
+               #passwordInput
+               (input)="passwordValue = passwordInput.value.trim()" />
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-grid gap-2">
+        <button type="button"
+                class="btn btn-primary"
+                [disabled]="!(emailValue && passwordValue)"
+                (click)="login(emailInput.value, passwordInput.value)">
+          Login
+        </button>
+        <button type="button"
+                class="btn btn-outline-secondary"
+                (click)="resetForm(emailInput, passwordInput)">
+          Reset
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -2,7 +2,11 @@ import { Observable } from 'rxjs';
 import { Product } from '../../models/Product';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../services/ApiService';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: "root",
+})
 export class ProductManagementService {
 
   constructor(private _http: HttpClient) {

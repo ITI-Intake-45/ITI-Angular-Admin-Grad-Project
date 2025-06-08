@@ -9,6 +9,8 @@ import { AdminAuthService } from '../../../services/AdminAuthService';
   styleUrl: './admin-login.component.css'
 })
 export class AdminLoginComponent {
+  protected emailValue: string = '';
+  protected passwordValue: string = '';
 
   constructor(private _adminAuthService: AdminAuthService, private _router: Router) {}
 
@@ -17,5 +19,12 @@ export class AdminLoginComponent {
     if (isSuccessful) {
       this._router.navigateByUrl(`/admin`).then(_ => {});
     }
+  }
+
+  resetForm(emailField: HTMLInputElement, passwordField: HTMLInputElement) {
+    this.emailValue = '';
+    this.passwordValue = '';
+    emailField.value = '';
+    passwordField.value = '';
   }
 }

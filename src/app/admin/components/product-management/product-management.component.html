@@ -1,43 +1,88 @@
-<h2>Products List</h2>
+<div class="container py-4">
+  <h2 class="mb-4">Products List</h2>
 
-@if (message != null) {
-  alert(message);
-}
+  @if (message != null) {
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  }
 
-@if (isAddSupported) {
-  <button type="button" (click)="addProduct()">Add Product</button>
-}
+  @if (isAddSupported) {
+    <div class="mb-4">
+      <button type="button" class="btn btn-success" (click)="addProduct()">Add Product</button>
+    </div>
+  }
 
-@if (products.length != 0) {
-  <h3>Product Count: {{ products.length }}</h3>
+  @if (products.length != 0) {
+    <h3 class="mb-4">Product Count: {{ products.length }}</h3>
 
-  <div>
-    @for (product of products; track product.productId) {
-      <div>
-        <img [src]="product.image" alt="Product image to be displayed"/>
+    <div class="row g-4">
+      @for (product of products; track product.productId) {
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="card h-100 shadow-sm">
+            <img [src]="product.image"
+                 [alt]="'Image of ' + product.name"
+                 class="card-img-top"
+                 style="height: 200px; object-fit: cover;">
 
-        <h3>{{ product.name }}</h3>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-truncate">{{ product.name }}</h5>
+              <p class="card-text text-muted small">{{ product.description }}</p>
 
-        <p>
-          {{ product.description }}
-        </p>
+              <div class="mt-auto">
+                <p class="mb-1">
+                  <strong>Stock:</strong> {{ product.stock }}
+                </p>
+                <p class="mb-2">
+                  <strong>Status:</strong> {{ product.status }}
+                </p>
 
-        <p>
-          <strong>Stock:</strong> {{ product.stock }}
-        </p>
+                <div class="d-grid gap-2">
+                  @if (isUpdateSupported) {
+                    <button type="button" class="btn btn-outline-primary btn-sm"
+                            (click)="updateProduct(product)">Update</button>
+                  }
+                  @if (isDeleteSupported) {
+                    <button type="button" class="btn btn-outline-danger btn-sm"
+                            data-bs-toggle="modal"
+                            [attr.data-bs-target]="'#deleteModal' + product.productId">
+                      Delete
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        @if (isUpdateSupported) {
-          <button type="button"
-                  (click)="updateProduct(product)">Update
-          </button>
-        }
-
-        @if (isDeleteSupported) {
-          <button type="button"
-                  (click)="deleteProduct(product)">Delete
-          </button>
-        }
-      </div>
-    }
-  </div>
-}
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade"
+             id="deleteModal{{ product.productId }}"
+             tabindex="-1"
+             [attr.aria-labelledby]="'deleteModalLabel' + product.productId"
+             aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel{{ product.productId }}">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete the product "<strong>{{ product.name }}</strong>"?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger btn-sm"
+                        (click)="deleteProduct(product)"
+                        data-bs-dismiss="modal">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

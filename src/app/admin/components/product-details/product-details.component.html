@@ -1,52 +1,79 @@
-<h2>Product Details</h2>
+<div class="container py-4">
+  <h2 class="mb-4">Product Details</h2>
 
-@if (message != null) {
-  alert(message);
-}
+  @if (message != null) {
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  }
 
-@if (product != null) {
-  <div>
-    <p>
-      <strong>Title:</strong> {{ product.name }}
-    </p>
+  @if (product != null) {
+    <div class="card shadow-sm">
+      <div class="row g-0">
+        <!-- Image -->
+        <div class="col-md-4 d-flex align-items-center justify-content-center bg-light p-3 rounded-start">
+          <img [src]="product.image"
+               [alt]="'Image of ' + product.name"
+               class="img-fluid rounded"
+               style="max-height: 250px; object-fit: cover;">
+        </div>
 
-    <p>
-      <strong>Description:</strong> {{ product.description }}
-    </p>
+        <!-- Product Info -->
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title text-primary">{{ product.name }}</h5>
 
-    <p>
-      <strong>Price:</strong> {{ product.price }}
-    </p>
+            <dl class="row">
+              <dt class="col-sm-3">Description</dt>
+              <dd class="col-sm-9">{{ product.description }}</dd>
 
-    <img [src]="product.image" alt="The product image to be displayed">
+              <dt class="col-sm-3">Price</dt>
+              <dd class="col-sm-9">$ {{ product.price }}</dd>
 
-    <p>
-      <strong>Stock:</strong> {{ product.stock }}
-    </p>
+              <dt class="col-sm-3">Stock</dt>
+              <dd class="col-sm-9">{{ product.stock }}</dd>
 
-    <p>
-      <strong>Status:</strong>
-      @if (product.stock > 0) {
-        In Stock
-      } @else {
-        Out of Stock
-      }
-    </p>
+              <dt class="col-sm-3">Status</dt>
+              <dd class="col-sm-9">{{ product.status }}</dd>
 
-    <p>
-      <strong>Category:</strong> {{ product.category.name }}
-    </p>
+              <dt class="col-sm-3">Category</dt>
+              <dd class="col-sm-9">{{ product.category.name }}</dd>
+            </dl>
 
-    @if (isUpdateSupported) {
-      <button type="button"
-              (click)="updateProduct()">Update
-      </button>
-    }
+            <div class="d-flex gap-2">
+              @if (isUpdateSupported) {
+                <button type="button" class="btn btn-outline-primary" (click)="updateProduct()">Update</button>
+              }
+              @if (isDeleteSupported) {
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteProductModal">
+                  Delete
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
 
-    @if (isDeleteSupported) {
-      <button type="button"
-              (click)="deleteProduct()">Delete
-      </button>
-    }
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteProductModalLabel">Confirm Deletion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete the product "<strong>{{ product?.name }}</strong>"?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteProduct()" data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
   </div>
-}
+</div>

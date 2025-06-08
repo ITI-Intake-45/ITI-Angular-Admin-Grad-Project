@@ -1,4 +1,4 @@
-<div class="d-flex vh-100">
+<div class="d-flex flex-column flex-md-row vh-100 w-100">
   <!-- Sidebar -->
   <div class="sidebar d-flex flex-column p-3 bg-dark text-white" [class.collapsed]="isCollapsed">
     <button class="btn btn-link text-white ms-auto mb-3" (click)="toggleSidebar()">
@@ -10,7 +10,7 @@
       <nav class="flex-grow-1">
         <ul class="list-unstyled ps-0">
           <li>
-            <a routerLink="dashboard"  class="text-white text-decoration-none d-block py-2">Dashboard</a>
+            <a routerLink="dashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a>
             <a routerLink="categories" class="text-white text-decoration-none d-block py-2">Categories</a>
             <a routerLink="products" class="text-white text-decoration-none d-block py-2">Products</a>
             <a routerLink="users" class="text-white text-decoration-none d-block py-2">Users</a>

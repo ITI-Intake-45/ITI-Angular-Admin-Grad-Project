@@ -35,7 +35,7 @@ export class CategoryFormComponent implements OnInit {
   ngOnInit(): void {
     this.message = this._messageService.getMessage(this._activatedRoute);
 
-    this._activatedRoute.paramMap.subscribe({
+    this._activatedRoute.queryParamMap.subscribe({
       next: params => {
         const mode: string | null = params.get('mode');
         if (mode == null || mode === '') {

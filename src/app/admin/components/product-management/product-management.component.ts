@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductManagementService } from '../../services/ProductManagementService';
 import { MessageService } from '../../services/MessageService';
 import { CrudPermissions } from '../../models/CrudPermissions';
-
+updateOrderStatus
 @Component({
   selector: 'app-product-management',
   standalone: false,
