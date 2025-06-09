@@ -1,5 +1,5 @@
 <div class="container py-4">
-  <h2 class="mb-4">Product Form</h2>
+  <h2 class="mb-4">{{ mode === 'add' ? 'Add Product' : 'Update Product' }}</h2>
 
   @if (message != null) {
     <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -11,102 +11,134 @@
   <form class="bg-white p-4 rounded shadow-sm">
     <!-- Product Name -->
     <div class="mb-3">
-      <label for="name" class="form-label">Product Name:</label>
+      <label for="name" class="form-label">Product Name: <span class="text-danger">*</span></label>
       <input
         type="text"
-        id="name"
         [(ngModel)]="product.name"
         name="name"
         class="form-control"
         required
+        #nameField="ngModel"
+        [class.is-invalid]="nameField.invalid && nameField.touched"
       />
+      @if (nameField.invalid && nameField.touched) {
+        <div class="invalid-feedback">
+          Product name is required.
+        </div>
+      }
     </div>
 
     <!-- Description -->
     <div class="mb-3">
-      <label for="description" class="form-label">Description:</label>
+      <label for="description" class="form-label">Description: <span class="text-danger">*</span></label>
       <textarea
-        id="description"
         [(ngModel)]="product.description"
         name="description"
         class="form-control"
         rows="3"
         required
+        #descField="ngModel"
+        [class.is-invalid]="descField.invalid && descField.touched"
       ></textarea>
+      @if (descField.invalid && descField.touched) {
+        <div class="invalid-feedback">
+          Description is required.
+        </div>
+      }
     </div>
 
     <!-- Price -->
     <div class="mb-3">
-      <label for="price" class="form-label">Price ($):</label>
+      <label for="price" class="form-label">Price ($): <span class="text-danger">*</span></label>
       <input
         type="number"
-        id="price"
         [(ngModel)]="product.price"
         name="price"
         class="form-control"
-        min="0"
+        min="0.01"
         step="0.01"
         required
+        #priceField="ngModel"
+        [class.is-invalid]="priceField.invalid && priceField.touched"
       />
+      @if (priceField.invalid && priceField.touched) {
+        <div class="invalid-feedback">
+          Price must be greater than 0.
+        </div>
+      }
     </div>
 
     <!-- Stock -->
     <div class="mb-3">
-      <label for="stock" class="form-label">Stock:</label>
+      <label for="stock" class="form-label">Stock: <span class="text-danger">*</span></label>
       <input
         type="number"
-        id="stock"
         [(ngModel)]="product.stock"
         name="stock"
         class="form-control"
         min="0"
         required
+        #stockField="ngModel"
+        [class.is-invalid]="stockField.invalid && stockField.touched"
       />
-    </div>
-
-    <!-- Status -->
-    <div class="mb-3">
-      <label for="status" class="form-label">Status:</label>
-      <select
-        id="status"
-        [(ngModel)]="product.status"
-        name="status"
-        class="form-select"
-        required
-      >
-        <option value="">Select Status</option>
-        <option value="ACTIVE">Active</option>
-        <option value="INACTIVE">Inactive</option>
-      </select>
+      @if (stockField.invalid && stockField.touched) {
+        <div class="invalid-feedback">
+          Stock cannot be negative.
+        </div>
+      }
     </div>
 
     <!-- Category -->
     <div class="mb-3">
-      <label for="category" class="form-label">Category:</label>
+      <label for="category" class="form-label">Category: <span class="text-danger">*</span></label>
       <select
-        id="category"
-        [(ngModel)]="product.category.name"
+        [(ngModel)]="selectedCategoryId"
         name="category"
         class="form-select"
         required
+        #categoryField="ngModel"
+        [class.is-invalid]="categoryField.invalid && categoryField.touched"
       >
-        <option value="">Select Category</option>
+        <option value="0">Select Category</option>
         @for (category of categories; track category.id) {
-          <option [value]="category.name">{{ category.name }}</option>
+          <option [value]="category.id">{{ category.name }}</option>
         }
       </select>
+      @if (categoryField.invalid && categoryField.touched) {
+        <div class="invalid-feedback">
+          Please select a category.
+        </div>
+      }
     </div>
 
     <!-- Image Upload -->
     <div class="mb-3">
-      <label for="image" class="form-label">Product Image:</label>
+      <label for="image" class="form-label">
+        Product Image:
+        @if (mode === ADD_MODE) {
+          <span class="text-danger">*</span>
+        }
+        @if (mode === UPDATE_MODE) {
+          <small class="text-muted">(optional)</small>
+        }
+      </label>
       <input
         type="file"
-        id="image"
         (change)="onFileChange($event)"
         accept="image/*"
         class="form-control"
+        [required]="mode === ADD_MODE"
       />
+      @if (mode === ADD_MODE && imageFile === null) {
+        <div class="form-text text-danger">
+          Image is required when adding a new product.
+        </div>
+      }
+      @if (imageFile) {
+        <div class="form-text text-success">
+          Selected: {{ imageFile.name }}
+        </div>
+      }
     </div>
 
     <!-- Submit Button -->
@@ -115,9 +147,15 @@
         type="button"
         class="btn btn-primary"
         (click)="onSubmit()"
-        [disabled]="!product.name || !product.description || !product.price || !product.stock || !product.status || !product.category.name || !imageFile"
+        [disabled]="isDisabled()"
       >
-        Submit
+        {{ mode === 'add' ? 'Add Product' : 'Update Product' }}
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+      >
+        Cancel
       </button>
     </div>
   </form>

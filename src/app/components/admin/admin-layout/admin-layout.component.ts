@@ -9,7 +9,7 @@ import { AdminAuthService } from '../../../services/AdminAuthService';
   styleUrl: './admin-layout.component.css'
 })
 export class AdminLayoutComponent {
-  isCollapsed = false;
+  isCollapsed = true;
 
   constructor (private _adminAuthService: AdminAuthService,
                private _router: Router) {}

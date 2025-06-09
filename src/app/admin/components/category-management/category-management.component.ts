@@ -51,15 +51,16 @@ export class CategoryManagementComponent implements OnInit {
       .then(_ => {});
   }
 
-  delete(id: number): void {
-    this._categoryManagementService.deleteCategory(id).subscribe({
+  delete(category: ProductCategory): void {
+    this._categoryManagementService.deleteCategory(category.id).subscribe({
       next: response => {
         this.message = response;
+        this.categories.splice(this.categories.indexOf(category), 1);
       },
       error: (err: HttpErrorResponse) => {
         this.message = err.error;
       }
-    })
+    });
   }
 
 }

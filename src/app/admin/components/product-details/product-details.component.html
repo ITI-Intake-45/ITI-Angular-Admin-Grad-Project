@@ -13,7 +13,7 @@
       <div class="row g-0">
         <!-- Image -->
         <div class="col-md-4 d-flex align-items-center justify-content-center bg-light p-3 rounded-start">
-          <img [src]="product.image"
+          <img [src]="getImagePath(product.image)"
                [alt]="'Image of ' + product.name"
                class="img-fluid rounded"
                style="max-height: 250px; object-fit: cover;">

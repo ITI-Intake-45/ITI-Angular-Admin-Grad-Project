@@ -57,7 +57,7 @@ export class ProductManagementComponent implements OnInit {
   }
 
   updateProduct(product: Product): void {
-    this._router.navigateByUrl(`/admin/products/productForm?mode=update?id=${product.productId}`)
+    this._router.navigateByUrl(`/admin/products/productForm?mode=update&id=${product.productId}`)
       .then(_ => {});
   }
 

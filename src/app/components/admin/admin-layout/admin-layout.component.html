@@ -10,11 +10,25 @@
       <nav class="flex-grow-1">
         <ul class="list-unstyled ps-0">
           <li>
-            <a routerLink="dashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a>
-            <a routerLink="categories" class="text-white text-decoration-none d-block py-2">Categories</a>
-            <a routerLink="products" class="text-white text-decoration-none d-block py-2">Products</a>
-            <a routerLink="users" class="text-white text-decoration-none d-block py-2">Users</a>
-            <a href="#" (click)="logout()" class="text-white text-decoration-none d-block py-2">Log out</a>
+            <a routerLink="dashboard"
+               class="text-white text-decoration-none d-block py-2"
+               (click)="isCollapsed = true">Dashboard</a>
+
+            <a routerLink="categories"
+               class="text-white text-decoration-none d-block py-2"
+               (click)="isCollapsed = true">Categories</a>
+
+            <a routerLink="products"
+               class="text-white text-decoration-none d-block py-2"
+               (click)="isCollapsed = true">Products</a>
+
+            <a routerLink="users"
+               class="text-white text-decoration-none d-block py-2"
+               (click)="isCollapsed = true">Users</a>
+
+            <a href="#"
+               class="text-white text-decoration-none d-block py-2"
+               (click)="logout()">Log out</a>
           </li>
         </ul>
       </nav>

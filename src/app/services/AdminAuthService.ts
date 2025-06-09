@@ -4,9 +4,6 @@ import { ApiService } from './ApiService';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-// ApiService.apiUrl + '/admin/login'
-// ApiService.apiUrl + '/admin/logout'
-// ApiService.apiUrl + '/auth/status'
 @Injectable({
   providedIn: "root",
 })
@@ -14,7 +11,7 @@ export class AdminAuthService {
   private isLoggedIn: boolean = false;
 
   // BehaviorSubject holds the current value and emits it to new subscribers
-  private messageSubject = new BehaviorSubject<string>('Initial message');
+  private messageSubject = new BehaviorSubject<string>('Connecting to server...');
 
   // Observable stream ($ convention indicates it's an Observable)
   public message$ = this.messageSubject.asObservable();

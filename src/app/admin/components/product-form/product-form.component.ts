@@ -1,3 +1,4 @@
+// Fixed product-form.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../models/Product';
 import { ProductCategory } from '../../../models/ProductCategory';
@@ -7,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../services/MessageService';
 import { CategoryService } from '../../../services/CategoryService';
 import { CrudPermissions } from '../../models/CrudPermissions';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-form',
@@ -24,12 +26,13 @@ export class ProductFormComponent implements OnInit {
     price: 0,
     image: '',
     stock: 0,
-    status: '',
+    status: 'ACTIVE', // Set default status
     category: { id: 0, name: '' }
   };
 
   protected categories: ProductCategory[] = [];
   protected imageFile: File | null = null;
+  protected selectedCategoryId: number = 0;
 
   protected readonly isAddSupported: boolean = CrudPermissions.IS_ADD_PRODUCT_AVAILABLE;
   protected readonly isUpdateSupported: boolean = CrudPermissions.IS_UPDATE_PRODUCT_AVAILABLE;
@@ -61,7 +64,7 @@ export class ProductFormComponent implements OnInit {
         }
 
         if (this.supportedModes.indexOf(mode) === -1) {
-          this._router.navigateByUrl('/admin/categories?message=' + 'Not a supported mode')
+          this._router.navigateByUrl('/admin/products?message=' + 'Not a supported mode')
             .then(_ => {});
           return;
         }
@@ -70,7 +73,7 @@ export class ProductFormComponent implements OnInit {
         if (mode == this.UPDATE_MODE) {
           const idString: string | null = params.get('id');
           if (idString === null || idString === '') {
-            this._router.navigateByUrl('/admin/categories?message' + 'Id must be provided')
+            this._router.navigateByUrl('/admin/products?message' + 'Id must be provided')
               .then(_ => {});
             return;
           }
@@ -93,6 +96,7 @@ export class ProductFormComponent implements OnInit {
     this._productService.getProductById(id).subscribe({
       next: response => {
         this.product = response;
+        this.selectedCategoryId = response.category.id;
       },
       error: err => {
         console.error(err);
@@ -116,42 +120,71 @@ export class ProductFormComponent implements OnInit {
       throw new Error('Invalid component state, id cannot be null in submit when mode is update');
     }
 
+    if (this.mode == this.ADD_MODE && this.imageFile == null) {
+      throw new Error('Image file is mandatory in add mode');
+    }
+
     if (this.mode == this.ADD_MODE && !this.isAddSupported) {
-      alert('Add is not supported yet');
+      this.message = 'Add is not allowed';
       return;
     }
 
     if (this.mode == this.UPDATE_MODE && !this.isUpdateSupported) {
-      alert('Update is not supported yet');
+      this.message = 'Update is not allowed';
       return;
     }
 
-    if (this.imageFile) {
-      const formData = new FormData();
-      formData.append('product', new Blob([JSON.stringify(this.product)], {type: 'application/json'}));
-      formData.append('image', this.imageFile);
-
-      if (this.mode == this.ADD_MODE) {
-        this._productManagementService.createProduct(formData).subscribe({
-          next: response => {
-            console.log('Product created:', response);
-          },
-          error: error => {
-            console.log('Error creating product:', error);
-          }
-        });
-      }
-
-      if (this.mode == this.UPDATE_MODE) {
-        this._productManagementService.updateProduct(formData).subscribe({
-          next: (response) => {
-            console.log('Product updated:', response);
-          },
-          error: err => {
-            console.log('Error updating product:', err);
-          }
-        })
+    // Setting the category for the product before calling the service.
+    for (let i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].id == this.selectedCategoryId) {
+        this.product.category = this.categories[i];
       }
     }
+
+    if (this.mode == this.ADD_MODE) {
+      this._productManagementService.createProduct(this.product, this.imageFile!).subscribe({
+        next: response => {
+          this._router.navigateByUrl('/admin/products?message=' + 'A product was added with id: ' + response.productId)
+            .then(_ => {});
+          return;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.message = err.error;
+        }
+      });
+    }
+
+    if (this.mode == this.UPDATE_MODE) {
+      this._productManagementService.updateProduct(this.product, this.imageFile).subscribe({
+        next: (response) => {
+          this._router.navigateByUrl('/admin/products?message=' + response)
+            .then(_ => {});
+          return;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.message = err.error;
+        }
+      });
+    }
+  }
+
+  isDisabled(): boolean {
+    const basicFieldsValid = this.product.name.trim() !== '' &&
+      this.product.description.trim() !== '' &&
+      this.product.price > 0 &&
+      this.product.stock >= 0 &&
+      this.selectedCategoryId > 0;
+
+    // In ADD mode, image is required
+    if (this.mode === this.ADD_MODE) {
+      return !basicFieldsValid || this.imageFile === null;
+    }
+
+    // In UPDATE mode, image is optional
+    if (this.mode === this.UPDATE_MODE) {
+      return !basicFieldsValid;
+    }
+
+    return true; // Default to disabled state if mode is unknown
   }
 }

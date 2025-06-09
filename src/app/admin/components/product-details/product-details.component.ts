@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductManagementService } from '../../services/ProductManagementService';
 import { MessageService } from '../../services/MessageService';
 import { CrudPermissions } from '../../models/CrudPermissions';
+import { ApiService } from '../../../services/ApiService';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-details',
@@ -28,11 +30,11 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.message = this._messageService.getMessage(this._activatedRoute);
 
-    this._activatedRoute.paramMap.subscribe({
+    this._activatedRoute.queryParamMap.subscribe({
       next: params => {
         const idString: string | null = params.get('id');
         if (idString == null) {
-          this._router.navigateByUrl('/admin/products').then(_ => {});
+          this._router.navigateByUrl('/admin/products?message=' + 'Id must be provided').then(_ => {});
           return;
         }
 
@@ -50,8 +52,8 @@ export class ProductDetailsComponent implements OnInit {
       next: response => {
         this.product = response;
       },
-      error: err => {
-        console.log(err);
+      error: (err: HttpErrorResponse) => {
+        this.message = err.error;
       }
     });
   }
@@ -61,7 +63,7 @@ export class ProductDetailsComponent implements OnInit {
       throw new Error('Product not found!');
     }
 
-    this._router.navigateByUrl(`/admin/products/productForm?mode=update?id=${this.product.productId}`)
+    this._router.navigateByUrl(`/admin/products/productForm?mode=update&id=${this.product.productId}`)
       .then(_ => {});
   }
 
@@ -75,9 +77,13 @@ export class ProductDetailsComponent implements OnInit {
         this._router.navigateByUrl(`/admin/products?message=${response}`)
           .then(_ => {});
       },
-      error: err => {
-        console.log(err);
+      error: (err: HttpErrorResponse) => {
+        this.message = err.error;
       }
     });
+  }
+
+  getImagePath(path: string): string {
+    return ApiService.getRealImagePath(path);
   }
 }
