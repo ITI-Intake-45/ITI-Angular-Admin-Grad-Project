@@ -9,6 +9,8 @@ import { UserManagementComponent } from './components/user-management/user-manag
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { AdminRoutingModule } from './admin-routing-module';
 import { FormsModule } from '@angular/forms';
+import { OrderManagementComponent } from './components/order-management/order-management.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { FormsModule } from '@angular/forms';
     ProductManagementComponent,
     ProductFormComponent,
     UserManagementComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    OrderManagementComponent,
+    OrderDetailsComponent
   ],
   imports: [
     CommonModule,

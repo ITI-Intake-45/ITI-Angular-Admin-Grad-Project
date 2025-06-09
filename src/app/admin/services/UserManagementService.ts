@@ -12,6 +12,6 @@ export class UserManagementService {
   constructor(private _http: HttpClient) {}
 
   getAllUsers(): Observable<UserProfile[]> {
-    return this._http.get<UserProfile[]>(`${ApiService.apiUrl}/admin`);
+    return this._http.get<UserProfile[]>(`${ApiService.apiUrl}/users`, { withCredentials: true });
   }
 }

@@ -5,6 +5,7 @@ import { OrderManagementService } from '../../services/OrderManagementService';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from '../../services/MessageService';
 import { CategoryService } from '../../../services/CategoryService';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,8 +36,8 @@ export class DashboardComponent implements OnInit {
       next: response => {
         this.categoriesCount = response.length;
       },
-      error: err => {
-        console.log(err);
+      error: (err: HttpErrorResponse) => {
+        this.message = err.error;
       }
     });
 
@@ -44,8 +45,8 @@ export class DashboardComponent implements OnInit {
       next: response => {
         this.productsCount = response.length;
       },
-      error: err => {
-        console.log(err);
+      error: (err: HttpErrorResponse) => {
+        this.message = err.error;
       }
     });
 
@@ -53,17 +54,17 @@ export class DashboardComponent implements OnInit {
       next: response => {
         this.usersCount = response.length;
       },
-      error: err => {
-        console.log(err);
+      error: (err: HttpErrorResponse) => {
+        this.message = err.error;
       }
     });
 
     this._orderManagementService.getAllOrders().subscribe({
       next: response => {
-        this.ordersCount = response.length;
+        this.ordersCount = response.totalElements;
       },
-      error: err => {
-        console.log(err);
+      error: (err: HttpErrorResponse) => {
+        this.message = err.error;
       }
     })
   }

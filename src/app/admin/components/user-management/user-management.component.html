@@ -12,7 +12,7 @@
     <h3 class="mb-4">User Count: {{ users.length }}</h3>
 
     <div class="row g-4">
-      @for (user of users; track user.id) {
+      @for (user of users; track user.userId) {
         <div class="col-md-6 col-lg-4">
           <div class="card shadow-sm h-100">
             <div class="card-body">
@@ -23,7 +23,10 @@
 
               <dl class="row mb-0">
                 <dt class="col-sm-4">Id</dt>
-                <dd class="col-sm-8">{{ user.id }}</dd>
+                <dd class="col-sm-8">{{ user.userId }}</dd>
+
+                <dt class="col-sm-4">Name</dt>
+                <dd class="col-sm-8">{{ user.name }}</dd>
 
                 <dt class="col-sm-4">Email</dt>
                 <dd class="col-sm-8">{{ user.email }}</dd>
