@@ -1,9 +1,10 @@
 import { Observable } from 'rxjs';
-import { Order } from '../../models/Order';
+import { OrderDTO } from '../../models/OrderDTO';
 import { ApiService } from '../../services/ApiService';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Page } from '../../Pagination/Page';
+import { OrdersListStatsDTO } from '../models/OrdersListStatsDTO';
 
 @Injectable({
   providedIn: "root",
@@ -12,19 +13,36 @@ export class OrderManagementService {
 
   constructor (private _http: HttpClient) {}
 
-  getAllOrders(): Observable<Page<Order>> {
-    return this._http.get<Page<Order>>(`${ApiService.apiUrl}/orders`, { withCredentials: true });
+  getOrdersStats(): Observable<OrdersListStatsDTO> {
+    return this._http.get<OrdersListStatsDTO>(`${ApiService.apiUrl}/orders/stats`, { withCredentials: true });
   }
 
-  getOrder(orderId: number): Observable<Order> {
-    return this._http.get<Order>(`${ApiService.apiUrl}/orders/${orderId}`, { withCredentials: true });
+  getOrdersPage(pageNumber: number, pageSize: number = 10): Observable<Page<OrderDTO>> {
+    const params = new HttpParams()
+      .set('page', pageNumber.toString())
+      .set('size', pageSize.toString());
+
+    return this._http.get<Page<OrderDTO>>(`${ApiService.apiUrl}/orders`, {
+      params: params,
+      withCredentials: true
+    });
   }
 
-  updateOrderStatus(orderId: number, status: string): Observable<Order> {
-    const updateOrderDTO = {
-      status: status
-    }
+  getOrder(orderId: number): Observable<OrderDTO> {
+    return this._http.get<OrderDTO>(`${ApiService.apiUrl}/orders/${orderId}`, { withCredentials: true });
+  }
 
-    return this._http.patch<Order>(`${ApiService.apiUrl}/orders/${orderId}/status`, updateOrderDTO, { withCredentials: true });
+  acceptOrder(orderId: number): Observable<string> {
+    return this._http.patch<string>(`${ApiService.apiUrl}/orders/${orderId}/accept`, {
+      withCredentials: true,
+      responseType: 'text'
+    });
+  }
+
+  cancelOrder(orderId: number): Observable<string> {
+    return this._http.patch<string>(`${ApiService.apiUrl}/orders/${orderId}/cancel`, {
+      withCredentials: true,
+      responseType: 'text'
+    });
   }
 }

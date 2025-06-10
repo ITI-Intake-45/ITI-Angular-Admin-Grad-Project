@@ -1,0 +1,16 @@
+/* dashboard.component.css */
+
+/* This targets the canvas specifically within the card-body to control its dimensions */
+.card-body canvas {
+  display: block;   /* Ensures the canvas behaves as a block-level element */
+  height: 300px;    /* Reinforce the height from HTML */
+  max-height: 300px; /* Crucial: Prevents the canvas from exceeding this height */
+  width: 100% !important; /* Ensure it always takes the full width of its parent */
+}
+
+/* Optional: Adjust the card-body if needed, though the above canvas rules are usually sufficient */
+.card-body {
+  position: relative; /* Good practice for children with absolute positioning, if any */
+  /* Remove min-height here if you prefer the canvas to strictly dictate the card-body's height */
+  /* Or ensure min-height is at least equal to canvas height + any padding */
+}

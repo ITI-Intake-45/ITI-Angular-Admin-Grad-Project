@@ -1,1 +1,67 @@
-<p>order-details works!</p>
+@if (order == null) {
+  <div>
+    Loading...
+  </div>
+} @else {
+  <div class="container py-4">
+    <h2 class="mb-4">Order #{{ order.orderId }}</h2>
+
+    @if (message != null) {
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    }
+
+    <div>
+      <p>
+        <strong>User Id:</strong> {{ order.userId }}
+      </p>
+
+      <p>
+        <strong>User Email:</strong> {{ order.email }}
+      </p>
+
+      <p>
+        <strong>Order Status:</strong> {{ order.status }}
+      </p>
+
+      <p>
+        <strong>Total Price:</strong> {{ order.totalPrice }}
+      </p>
+
+      @for (item of order.items; track item.productId) {
+        <div>
+          <img [src]="getImageUrl(item.imageUrl)"
+               alt="Image for product name: {{ item.productName}}"/>
+
+          <p>
+            <strong>Product Id:</strong> {{ item.productId }}
+          </p>
+
+          <p>
+            <strong>Product Name:</strong> {{ item.productName }}
+          </p>
+
+          <p>
+            <strong>Price Per Piece:</strong> {{ item.itemPrice }}
+          </p>
+
+          <p>
+            <strong>Quantity:</strong> {{ item.quantity }}
+          </p>
+        </div>
+      }
+
+      @if (order.status.toLowerCase() == "pending") {
+        @if (isAcceptAllowed) {
+          <button type="button" (click)="acceptOrder()">Accept</button>
+        }
+
+        @if (isCancelAllowed) {
+          <button type="button" (click)="cancelOrder()">Cancel</button>
+        }
+      }
+    </div>
+  </div>
+}

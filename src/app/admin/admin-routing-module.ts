@@ -7,6 +7,8 @@ import { ProductManagementComponent } from './components/product-management/prod
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
+import { OrderManagementComponent } from './components/order-management/order-management.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
   {
     path: 'users',
     component: UserManagementComponent
+  },
+  {
+    path: 'orders',
+    component: OrderManagementComponent
+  },
+  {
+    path: 'orders/:id',
+    component: OrderDetailsComponent
   }
 ]
 
