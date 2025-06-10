@@ -1,5 +1,6 @@
 /* Sidebar */
 .sidebar {
+  background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
   width: 250px;
   transition: all 0.3s ease;
   z-index: 1000;
