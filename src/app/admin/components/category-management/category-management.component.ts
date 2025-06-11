@@ -57,7 +57,7 @@ export class CategoryManagementComponent implements OnInit {
         this.message = response;
         this.categories.splice(this.categories.indexOf(category), 1);
       },
-      error: (err: HttpErrorResponse) => {
+      error: (_: HttpErrorResponse) => {
         this.message = "Could not delete a category attached to products";
       }
     });

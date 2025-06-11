@@ -33,14 +33,14 @@ export class OrderManagementService {
   }
 
   acceptOrder(orderId: number): Observable<string> {
-    return this._http.patch<string>(`${ApiService.apiUrl}/orders/${orderId}/accept`, {
+    return this._http.patch(`${ApiService.apiUrl}/orders/${orderId}/accept`, null, {
       withCredentials: true,
       responseType: 'text'
     });
   }
 
   cancelOrder(orderId: number): Observable<string> {
-    return this._http.patch<string>(`${ApiService.apiUrl}/orders/${orderId}/cancel`, {
+    return this._http.patch(`${ApiService.apiUrl}/orders/${orderId}/cancel`, null, {
       withCredentials: true,
       responseType: 'text'
     });

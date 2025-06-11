@@ -6,6 +6,7 @@ import { OrderManagementService } from '../../services/OrderManagementService';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CrudPermissions } from '../../models/CrudPermissions';
 import { ApiService } from '../../../services/ApiService';
+import { OrderStatus } from '../../../models/OrderStatus';
 
 @Component({
   selector: 'app-order-details',
@@ -78,6 +79,7 @@ export class OrderDetailsComponent implements OnInit {
     this._orderManagementService.acceptOrder(this.order.orderId).subscribe({
       next: response => {
         this.message = response;
+        this.order!.status = OrderStatus.ACCEPTED;
       },
       error: (err: HttpErrorResponse) => {
         this.message = err.error;
@@ -97,10 +99,13 @@ export class OrderDetailsComponent implements OnInit {
     this._orderManagementService.cancelOrder(this.order.orderId).subscribe({
       next: response => {
         this.message = response;
+        this.order!.status = OrderStatus.CANCELLED
       },
       error: (err: HttpErrorResponse) => {
         this.message = err.error;
       }
     })
   }
+
+  protected readonly OrderStatus = OrderStatus;
 }
