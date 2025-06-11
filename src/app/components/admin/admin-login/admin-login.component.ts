@@ -8,22 +8,22 @@ import { AdminAuthService } from '../../../services/AdminAuthService';
   styleUrl: './admin-login.component.css'
 })
 export class AdminLoginComponent {
-  protected emailValue: string = '';
+  protected usernameValue: string = '';
   protected passwordValue: string = '';
 
   protected message: string | null = null;
 
   constructor(private _adminAuthService: AdminAuthService) {}
 
-  login(email: string, password: string): void {
-    this._adminAuthService.login(email, password);
+  login(username: string, password: string): void {
+    this._adminAuthService.login(username, password);
     this._adminAuthService.message$.subscribe(response => {
       this.message = response;
     });
   }
 
   resetForm(emailField: HTMLInputElement, passwordField: HTMLInputElement) {
-    this.emailValue = '';
+    this.usernameValue = '';
     this.passwordValue = '';
     emailField.value = '';
     passwordField.value = '';

@@ -20,14 +20,14 @@ export class AdminAuthService {
               private _router: Router) {
   }
 
-  login(email: string, password: string): void {
+  login(username: string, password: string): void {
     if (this.isLoggedIn) {
       this.redirectToAdminHome();
       return;
     }
 
     const loginDTO = {
-      email: email,
+      email: username,
       password: password,
     };
 

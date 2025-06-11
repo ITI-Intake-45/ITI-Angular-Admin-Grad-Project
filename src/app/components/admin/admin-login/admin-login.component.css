@@ -1,0 +1,38 @@
+/* Brand Colors */
+.brand-card {
+  background-color: #F5F9FF !important; /* Light blue background for card */
+  color: #0A246A !important; /* Dark blue text */
+}
+
+.brand-text-primary {
+  color: #0A246A !important;
+}
+
+.brand-text-secondary {
+  color: #0A246A !important;
+}
+
+.text-warning-emphasis {
+  color: #FF9800 !important; /* Yellowish-orange for "Cuppot" */
+}
+
+.brand-btn-primary {
+  background-color: #0A246A !important;
+  border-color: #0A246A !important;
+  color: #fff !important;
+}
+
+.brand-btn-primary:hover {
+  background-color: #00174a !important;
+  border-color: #00174a !important;
+}
+
+.brand-btn-secondary {
+  color: #0A246A !important;
+  border-color: #0A246A !important;
+}
+
+.brand-btn-secondary:hover {
+  background-color: #0A246A !important;
+  color: #fff !important;
+}

@@ -1,42 +1,59 @@
-<div class="d-flex flex-column flex-md-row vh-100 w-100">
+<div class="d-flex flex-column flex-md-row vh-100 w-100 bg-dark">
   <!-- Sidebar -->
-  <div class="sidebar d-flex flex-column p-3 bg-dark text-white" [class.collapsed]="isCollapsed">
-    <button class="btn btn-link text-white ms-auto mb-3" (click)="toggleSidebar()">
-      <i class="bi" [class.bi-arrow-left-square]="!isCollapsed" [class.bi-arrow-right-square]="isCollapsed"></i>
-    </button>
+  <div class="sidebar d-flex flex-column p-3 brand-sidebar" [class.collapsed]="isCollapsed">
+    <!-- Sidebar Header -->
+    <div class="sidebar-header d-flex align-items-center mb-3 px-2">
+      <img ngSrc="assets/favicon.png"
+           alt="Cuppot Logo"
+           width="32"
+           height="32"
+           class="me-2 rounded-circle border border-light">
+
+      @if (!isCollapsed) {
+        <h5 class="m-0 fw-bold text-warning-emphasis">Cuppot</h5>
+      }
+
+      <!-- Toggle Button -->
+      <button class="btn btn-link text-warning-emphasis ms-auto mb-0" (click)="toggleSidebar()" title="Toggle sidebar">
+        <i class="bi fs-4" [class.bi-list]="isCollapsed" [class.bi-x-lg]="!isCollapsed"></i>
+      </button>
+    </div>
 
     <!-- Sidebar nav/content -->
-    @if (!isCollapsed) {
-      <nav class="flex-grow-1">
-        <ul class="list-unstyled ps-0">
-          <li>
-            <a routerLink="dashboard"
-               class="text-white text-decoration-none d-block py-2"
-               (click)="isCollapsed = true">Dashboard</a>
-
-            <a routerLink="categories"
-               class="text-white text-decoration-none d-block py-2"
-               (click)="isCollapsed = true">Categories</a>
-
-            <a routerLink="products"
-               class="text-white text-decoration-none d-block py-2"
-               (click)="isCollapsed = true">Products</a>
-
-            <a routerLink="users"
-               class="text-white text-decoration-none d-block py-2"
-               (click)="isCollapsed = true">Users</a>
-
-            <a routerLink="orders"
-               class="text-white text-decoration-none d-block py-2"
-               (click)="isCollapsed = true">Orders</a>
-
-            <a href="#"
-               class="text-white text-decoration-none d-block py-2"
-               (click)="logout()">Log out</a>
-          </li>
-        </ul>
-      </nav>
-    }
+    <nav class="flex-grow-1">
+      <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+          <a routerLink="dashboard"
+             class="text-white text-decoration-none d-block py-2 px-3 rounded"
+             (click)="isCollapsed = true">Dashboard</a>
+        </li>
+        <li class="mb-1">
+          <a routerLink="categories"
+             class="text-white text-decoration-none d-block py-2 px-3 rounded"
+             (click)="isCollapsed = true">Categories</a>
+        </li>
+        <li class="mb-1">
+          <a routerLink="products"
+             class="text-white text-decoration-none d-block py-2 px-3 rounded"
+             (click)="isCollapsed = true">Products</a>
+        </li>
+        <li class="mb-1">
+          <a routerLink="users"
+             class="text-white text-decoration-none d-block py-2 px-3 rounded"
+             (click)="isCollapsed = true">Users</a>
+        </li>
+        <li class="mb-1">
+          <a routerLink="orders"
+             class="text-white text-decoration-none d-block py-2 px-3 rounded"
+             (click)="isCollapsed = true">Orders</a>
+        </li>
+        <li class="mb-1">
+          <a href="#"
+             class="text-white text-decoration-none d-block py-2 px-3 rounded"
+             (click)="logout()">Log out</a>
+        </li>
+      </ul>
+    </nav>
   </div>
 
   <!-- Main Content -->

@@ -7,6 +7,7 @@ import { AdminLoginComponent } from './components/admin/admin-login/admin-login.
 import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { provideHttpClient } from '@angular/common/http';
+import { NgOptimizedImage } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -15,10 +16,11 @@ import { provideHttpClient } from '@angular/common/http';
     AdminLayoutComponent,
     NotFoundComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgOptimizedImage
+    ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient()

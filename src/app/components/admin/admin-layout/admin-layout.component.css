@@ -1,47 +1,61 @@
-/* Sidebar */
-.sidebar {
-  background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
-  width: 250px;
-  transition: all 0.3s ease;
-  z-index: 1000;
+/* Brand Colors */
+.brand-sidebar {
+  background-color: #0A246A !important;
+  color: white !important;
 }
 
-.sidebar.collapsed {
-  width: 60px;
+.sidebar-header h5 {
+  color: #FF9800 !important; /* Yellowish-orange for "Cuppot" */
 }
 
-.sidebar .btn-link {
-  text-decoration: none;
-  font-size: 1.25rem;
-}
-
-/* Hide content when collapsed */
-.sidebar.collapsed nav {
+.sidebar.collapsed .sidebar-header h5 {
   display: none;
 }
 
-/* Main Content */
-.content {
-  transition: margin-left 0.3s ease;
+/* Set fixed width for sidebar */
+.sidebar {
+  width: 70px; /* Default collapsed width */
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar:not(.collapsed) {
+  width: 250px; /* Expanded width */
+}
+
+/* Hide sidebar links when collapsed */
+.sidebar.collapsed nav a {
+  display: none;
+}
+
+.sidebar:not(.collapsed) nav a {
+  display: block;
 }
 
 /* Responsive Behavior */
 @media (max-width: 768px) {
-  /* Switch to top-down layout */
-  .d-flex.flex-column.vh-100 {
-    flex-direction: column;
-  }
-
   .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    height: 100%;
     width: 100%;
-    border-bottom: 1px solid #333; /* Optional: Add a separator line */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
 
-  .sidebar.collapsed {
-    width: auto; /* Reset width for top-down layout */
+  .sidebar:not(.collapsed) {
+    transform: translateX(0);
   }
 
   .content {
-    margin-left: 0; /* Reset margin for top-down layout */
+    z-index: 1040;
+    position: relative;
   }
+}
+
+/* Pointer cursor on toggle button */
+.sidebar-header button {
+  cursor: pointer;
 }
