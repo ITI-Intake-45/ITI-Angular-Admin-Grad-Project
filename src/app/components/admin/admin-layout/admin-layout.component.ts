@@ -22,4 +22,14 @@ export class AdminLayoutComponent {
     this._adminAuthService.logout();
     this._router.navigateByUrl('/admin/login').then(_ => {});
   }
+
+  isMobile(): boolean {
+    return window.innerWidth < 769;
+  }
+
+  closeMobileSidebar(): void {
+    if (this.isMobile()) {
+      this.isCollapsed = true;
+    }
+  }
 }

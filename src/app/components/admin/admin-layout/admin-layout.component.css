@@ -4,35 +4,79 @@
   color: white !important;
 }
 
-.sidebar-header h5 {
-  color: #FF9800 !important; /* Yellowish-orange for "Cuppot" */
+.text-warning-emphasis {
+  color: #FF9800 !important;
 }
 
-.sidebar.collapsed .sidebar-header h5 {
-  display: none;
-}
-
-/* Set fixed width for sidebar */
+/* Sidebar Base Styles */
 .sidebar {
-  width: 70px; /* Default collapsed width */
+  width: 70px;
   transition: width 0.3s ease;
   overflow: hidden;
+  position: relative;
 }
 
 .sidebar:not(.collapsed) {
-  width: 250px; /* Expanded width */
+  width: 250px;
 }
 
-/* Hide sidebar links when collapsed */
-.sidebar.collapsed nav a {
-  display: none;
+/* Logo Toggle Button (Desktop) */
+.logo-toggle {
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.sidebar:not(.collapsed) nav a {
-  display: block;
+.logo-toggle:hover {
+  transform: scale(1.05);
 }
 
-/* Responsive Behavior */
+/* Navigation Links */
+.nav-link {
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  transform: translateX(5px);
+}
+
+.nav-link.active {
+  background-color: #FF9800 !important;
+  color: #0A246A !important;
+  font-weight: 600;
+}
+
+.nav-link i {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Mobile Toggle Button */
+.mobile-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1060;
+  background-color: #0A246A !important;
+  border: 2px solid #FF9800 !important;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.mobile-toggle:hover,
+.mobile-toggle.active {
+  background-color: #FF9800 !important;
+  border-color: #0A246A !important;
+  transform: scale(1.1);
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
@@ -40,22 +84,33 @@
     left: 0;
     z-index: 1050;
     height: 100%;
-    width: 100%;
-    transform: translateX(-100%);
+    width: 280px !important;
+    transform: translateY(-100%);
     transition: transform 0.3s ease;
   }
 
   .sidebar:not(.collapsed) {
-    transform: translateX(0);
+    transform: translateY(0);
+  }
+
+  .sidebar.collapsed {
+    transform: translateY(-100%);
   }
 
   .content {
-    z-index: 1040;
-    position: relative;
+    margin-left: 0 !important;
+    padding-top: 80px;
   }
 }
 
-/* Pointer cursor on toggle button */
-.sidebar-header button {
-  cursor: pointer;
+/* Desktop Styles */
+@media (min-width: 769px) {
+  .mobile-toggle {
+    display: none !important;
+  }
+
+  .content {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+  }
 }
