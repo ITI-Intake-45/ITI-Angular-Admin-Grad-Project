@@ -1,322 +1,148 @@
-/* dashboard.component.css */
-
-/* This targets the canvas specifically within the card-body to control its dimensions */
-.card-body canvas {
-  display: block;   /* Ensures the canvas behaves as a block-level element */
-  height: 300px;    /* Reinforce the height from HTML */
-  max-height: 300px; /* Crucial: Prevents the canvas from exceeding this height */
-  width: 100% !important; /* Ensure it always takes the full width of its parent */
+/* Brand Colors */
+.brand-card {
+  background-color: #F5F9FF !important;
+  border-color: #0A246A !important;
 }
 
-/* Optional: Adjust the card-body if needed, though the above canvas rules are usually sufficient */
+.brand-text-primary {
+  color: #0A246A !important;
+}
+
+.brand-text-secondary {
+  color: #0A246A !important;
+}
+
+.brand-text-accent {
+  color: #FF9800 !important;
+}
+
+.brand-border-primary {
+  border-left-color: #0A246A !important;
+}
+
+.brand-border-accent {
+  border-left-color: #FF9800 !important;
+}
+
+/* Dashboard Header */
+.container h2 {
+  font-weight: 700;
+  position: relative;
+}
+
+.container h2::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: #FF9800;
+  border-radius: 2px;
+}
+
+/* Enhanced Card Styling */
+.card {
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(10, 36, 106, 0.15) !important;
+}
+
 .card-body {
-  position: relative; /* Good practice for children with absolute positioning, if any */
-  /* Remove min-height here if you prefer the canvas to strictly dictate the card-body's height */
-  /* Or ensure min-height is at least equal to canvas height + any padding */
+  position: relative;
+  padding: 1.5rem;
 }
 
-/*!* Dashboard Component Styles *!*/
+/* Icon Styling */
+.card-body i {
+  transition: all 0.3s ease;
+}
 
-/*!* Container animations *!*/
-/*.container {*/
-/*  animation: fadeInUp 0.8s ease-out;*/
-/*}*/
+.card:hover .card-body i {
+  transform: scale(1.05);
+}
 
-/*!* Dashboard title animation *!*/
-/*.container h2 {*/
-/*  position: relative;*/
-/*  color: #2c3e50;*/
-/*  font-weight: 700;*/
-/*  margin-bottom: 2rem;*/
-/*  animation: slideInLeft 0.6s ease-out;*/
-/*}*/
+/* Alert Branding */
+.alert.brand-card {
+  border-left: 4px solid #FF9800 !important;
+}
 
-/*.container h2::after {*/
-/*  content: '';*/
-/*  position: absolute;*/
-/*  bottom: -8px;*/
-/*  left: 0;*/
-/*  width: 50px;*/
-/*  height: 3px;*/
-/*  background: linear-gradient(45deg, #007bff, #6610f2);*/
-/*  border-radius: 2px;*/
-/*  animation: expandWidth 1s ease-out 0.5s both;*/
-/*}*/
+/* Canvas Chart Styling */
+.card-body canvas {
+  display: block;
+  height: 300px;
+  max-height: 300px;
+  width: 100% !important;
+}
 
-/*!* Alert animations *!*/
-/*.alert {*/
-/*  animation: slideInDown 0.5s ease-out;*/
-/*  border: none;*/
-/*  border-radius: 12px;*/
-/*  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.15);*/
-/*}*/
+/* Loading States */
+.spinner-border.brand-text-primary {
+  color: #0A246A !important;
+  border-color: #0A246A;
+  border-right-color: transparent;
+}
 
-/*.alert-info {*/
-/*  background: linear-gradient(135deg, #e3f2fd, #bbdefb);*/
-/*  color: #1565c0;*/
-/*}*/
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1.25rem;
+  }
 
-/*!* Card container animation *!*/
-/*.row.g-4 {*/
-/*  animation: fadeIn 0.8s ease-out 0.3s both;*/
-/*}*/
+  .card-body i.fs-1 {
+    font-size: 2.5rem !important;
+  }
 
-/*!* Enhanced card styling *!*/
-/*.card {*/
-/*  border: none;*/
-/*  border-radius: 16px;*/
-/*  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);*/
-/*  background: #ffffff;*/
-/*  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);*/
-/*  overflow: hidden;*/
-/*  position: relative;*/
-/*  animation: slideInUp 0.6s ease-out;*/
-/*}*/
+  .card-text.fs-4 {
+    font-size: 1.5rem !important;
+  }
 
-/*!* Staggered animation for cards *!*/
-/*.col-md-6:nth-child(1) .card { animation-delay: 0.1s; }*/
-/*.col-md-6:nth-child(2) .card { animation-delay: 0.2s; }*/
-/*.col-md-6:nth-child(3) .card { animation-delay: 0.3s; }*/
-/*.col-md-6:nth-child(4) .card { animation-delay: 0.4s; }*/
+  .card-text.fs-3 {
+    font-size: 1.25rem !important;
+  }
+}
 
-/*!* Card hover effects *!*/
-/*.card:hover {*/
-/*  transform: translateY(-8px) scale(1.02);*/
-/*  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);*/
-/*}*/
+/* Custom Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-/*!* Gradient overlays for cards *!*/
-/*.card::before {*/
-/*  content: '';*/
-/*  position: absolute;*/
-/*  top: 0;*/
-/*  left: 0;*/
-/*  right: 0;*/
-/*  bottom: 0;*/
-/*  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));*/
-/*  opacity: 0;*/
-/*  transition: opacity 0.3s ease;*/
-/*  pointer-events: none;*/
-/*}*/
+.card {
+  animation: fadeInUp 0.6s ease-out;
+}
 
-/*.card:hover::before {*/
-/*  opacity: 1;*/
-/*}*/
+/* Staggered animation for cards */
+.col-md-6:nth-child(1) .card,
+.col-xl-3:nth-child(1) .card { animation-delay: 0.1s; }
+.col-md-6:nth-child(2) .card,
+.col-xl-3:nth-child(2) .card { animation-delay: 0.2s; }
+.col-md-6:nth-child(3) .card,
+.col-xl-3:nth-child(3) .card { animation-delay: 0.3s; }
+.col-md-6:nth-child(4) .card,
+.col-xl-3:nth-child(4) .card { animation-delay: 0.4s; }
 
-/*!* Enhanced border styling *!*/
-/*.border-primary {*/
-/*  border-left: 4px solid #007bff !important;*/
-/*  background: linear-gradient(135deg, rgba(0, 123, 255, 0.02), rgba(0, 123, 255, 0.01));*/
-/*}*/
+/* Empty State Styling */
+.text-center .brand-card {
+  max-width: 400px;
+  margin: 0 auto;
+  border: 2px dashed #0A246A;
+  background-color: #F5F9FF !important;
+}
 
-/*.border-success {*/
-/*  border-left: 4px solid #28a745 !important;*/
-/*  background: linear-gradient(135deg, rgba(40, 167, 69, 0.02), rgba(40, 167, 69, 0.01));*/
-/*}*/
-
-/*.border-danger {*/
-/*  border-left: 4px solid #dc3545 !important;*/
-/*  background: linear-gradient(135deg, rgba(220, 53, 69, 0.02), rgba(220, 53, 69, 0.01));*/
-/*}*/
-
-/*.border-warning {*/
-/*  border-left: 4px solid #ffc107 !important;*/
-/*  background: linear-gradient(135deg, rgba(255, 193, 7, 0.02), rgba(255, 193, 7, 0.01));*/
-/*}*/
-
-/*!* Card body enhancements *!*/
-/*.card-body {*/
-/*  padding: 1.5rem;*/
-/*  z-index: 1;*/
-/*}*/
-
-/*!* Icon animations *!*/
-/*.card-body i {*/
-/*  transition: all 0.3s ease;*/
-/*  position: relative;*/
-/*}*/
-
-/*.card:hover .card-body i {*/
-/*  transform: scale(1.1) rotate(5deg);*/
-/*  filter: brightness(1.2);*/
-/*}*/
-
-/*!* Icon pulse animation *!*/
-/*@keyframes pulse {*/
-/*  0%, 100% { transform: scale(1); }*/
-/*  50% { transform: scale(1.05); }*/
-/*}*/
-
-/*.text-primary i { animation: pulse 2s infinite; animation-delay: 0.5s; }*/
-/*.text-success i { animation: pulse 2s infinite; animation-delay: 1s; }*/
-/*.text-danger i { animation: pulse 2s infinite; animation-delay: 1.5s; }*/
-/*.text-warning i { animation: pulse 2s infinite; animation-delay: 2s; }*/
-
-/*!* Enhanced typography *!*/
-/*.card-title {*/
-/*  font-weight: 600;*/
-/*  color: #495057;*/
-/*  margin-bottom: 0.5rem;*/
-/*  transition: color 0.3s ease;*/
-/*}*/
-
-/*.card:hover .card-title {*/
-/*  color: #212529;*/
-/*}*/
-
-/*.card-text {*/
-/*  color: #6c757d;*/
-/*  font-weight: 700;*/
-/*  transition: all 0.3s ease;*/
-/*  position: relative;*/
-/*}*/
-
-/*.card:hover .card-text {*/
-/*  color: #495057;*/
-/*  transform: scale(1.05);*/
-/*}*/
-
-/*!* Number counter animation *!*/
-/*@keyframes countUp {*/
-/*  from { opacity: 0; transform: translateY(20px); }*/
-/*  to { opacity: 1; transform: translateY(0); }*/
-/*}*/
-
-/*.card-text.fs-4 {*/
-/*  animation: countUp 0.8s ease-out;*/
-/*}*/
-
-/*!* Loading shimmer effect *!*/
-/*@keyframes shimmer {*/
-/*  0% { background-position: -200px 0; }*/
-/*  100% { background-position: calc(200px + 100%) 0; }*/
-/*}*/
-
-/*.card-loading {*/
-/*  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);*/
-/*  background-size: 200px 100%;*/
-/*  animation: shimmer 1.5s infinite;*/
-/*}*/
-
-/*!* Responsive enhancements *!*/
-/*@media (max-width: 768px) {*/
-/*  .card-body {*/
-/*    padding: 1rem;*/
-/*  }*/
-
-/*  .card-body i {*/
-/*    font-size: 2rem !important;*/
-/*  }*/
-/*}*/
-
-/*!* Keyframe animations *!*/
-/*@keyframes fadeInUp {*/
-/*  from {*/
-/*    opacity: 0;*/
-/*    transform: translateY(30px);*/
-/*  }*/
-/*  to {*/
-/*    opacity: 1;*/
-/*    transform: translateY(0);*/
-/*  }*/
-/*}*/
-
-/*@keyframes slideInLeft {*/
-/*  from {*/
-/*    opacity: 0;*/
-/*    transform: translateX(-50px);*/
-/*  }*/
-/*  to {*/
-/*    opacity: 1;*/
-/*    transform: translateX(0);*/
-/*  }*/
-/*}*/
-
-/*@keyframes slideInDown {*/
-/*  from {*/
-/*    opacity: 0;*/
-/*    transform: translateY(-30px);*/
-/*  }*/
-/*  to {*/
-/*    opacity: 1;*/
-/*    transform: translateY(0);*/
-/*  }*/
-/*}*/
-
-/*@keyframes slideInUp {*/
-/*  from {*/
-/*    opacity: 0;*/
-/*    transform: translateY(50px);*/
-/*  }*/
-/*  to {*/
-/*    opacity: 1;*/
-/*    transform: translateY(0);*/
-/*  }*/
-/*}*/
-
-/*@keyframes fadeIn {*/
-/*  from {*/
-/*    opacity: 0;*/
-/*  }*/
-/*  to {*/
-/*    opacity: 1;*/
-/*  }*/
-/*}*/
-
-/*@keyframes expandWidth {*/
-/*  from {*/
-/*    width: 0;*/
-/*  }*/
-/*  to {*/
-/*    width: 50px;*/
-/*  }*/
-/*}*/
-
-/*!* Dark mode support *!*/
-/*@media (prefers-color-scheme: dark) {*/
-/*  .card {*/
-/*    background: #2d3748;*/
-/*    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);*/
-/*  }*/
-
-/*  .card-title {*/
-/*    color: #e2e8f0;*/
-/*  }*/
-
-/*  .card-text {*/
-/*    color: #cbd5e0;*/
-/*  }*/
-
-/*  .container h2 {*/
-/*    color: #f7fafc;*/
-/*  }*/
-/*}*/
-
-/*!* Additional micro-interactions *!*/
-/*.card-body:hover .flex-shrink-0 {*/
-/*  animation: bounce 0.6s ease-in-out;*/
-/*}*/
-
-/*@keyframes bounce {*/
-/*  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }*/
-/*  40% { transform: translateY(-10px); }*/
-/*  60% { transform: translateY(-5px); }*/
-/*}*/
-
-/*!* Improved focus states for accessibility *!*/
-/*.card:focus-within {*/
-/*  outline: 2px solid #007bff;*/
-/*  outline-offset: 2px;*/
-/*}*/
-
-/*!* Print styles *!*/
-/*@media print {*/
-/*  .card {*/
-/*    box-shadow: none;*/
-/*    border: 1px solid #dee2e6;*/
-/*  }*/
-
-/*  .card:hover {*/
-/*    transform: none;*/
-/*  }*/
-/*}*/
+/* Focus States for Accessibility */
+.card:focus-within {
+  outline: 2px solid #FF9800;
+  outline-offset: 2px;
+}

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CategoryManagementComponent } from './components/category-management/category-management.component';
 import { CategoryFormComponent } from './components/category-form/category-form.component';
@@ -24,10 +24,11 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
     OrderManagementComponent,
     OrderDetailsComponent
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        FormsModule,
+        NgOptimizedImage
+    ]
 })
 export class AdminModule { }

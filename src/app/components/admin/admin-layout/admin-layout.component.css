@@ -114,3 +114,29 @@
     transition: margin-left 0.3s ease;
   }
 }
+
+/* Dashboard Brand Colors Override */
+.content .brand-card {
+  background-color: #F5F9FF !important;
+  border-color: #0A246A !important;
+}
+
+.content .brand-text-primary {
+  color: #0A246A !important;
+}
+
+.content .brand-text-secondary {
+  color: #0A246A !important;
+}
+
+.content .brand-border-primary {
+  border-left-color: #0A246A !important;
+}
+
+.content .brand-border-accent {
+  border-left-color: #FF9800 !important;
+}
+
+.content .brand-text-accent {
+  color: #FF9800 !important;
+}
